@@ -28,7 +28,7 @@ export class AppController implements OnModuleInit {
   }
 
   @Get()
-  Producer() {
+  HelloProducer() {
     return this.clientKafka.send('my-first-topic', 'Hello Kafka'); // args - topic, message
   }
 
