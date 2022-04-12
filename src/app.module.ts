@@ -51,7 +51,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }),
 
     CacheModule.register({
-      isGlobal:true,
+      isGlobal: true,
       store: redisStore,
       socket: {
         host: 'localhost',
@@ -60,12 +60,27 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }),
 
     ClientsModule.register([
-      {name: 'GREETING_SERVICE',transport: Transport.REDIS,
-      options : {
-        url: 'redis://localhost:6379',
+      {
+        name: 'GREETING_SERVICE',
+        transport: Transport.REDIS,
+        options: {
+          url: 'redis://localhost:6379',
+        },
+      },
+      {
+        name: 'HERO_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'hero',
+            brokers: ['localhost:9092'],
+          },
+          consumer: {
+            groupId: 'hero-consumer'
+          }
+        }
       }
-    }
-    ])
+    ]),
   ],
   controllers: [AppController],
   providers: [

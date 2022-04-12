@@ -1,5 +1,5 @@
-import { CacheKey, CacheTTL, CACHE_MANAGER, Controller, Get, Inject, Logger, Param, UseGuards } from '@nestjs/common';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { CacheKey, CacheTTL, CACHE_MANAGER, Controller, Get, Inject, Logger, OnModuleInit, Param, UseGuards } from '@nestjs/common';
+import { ClientKafka, EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import {
   AuthGuard,
   Public,
@@ -8,14 +8,40 @@ import {
   Roles,
 } from 'nest-keycloak-connect';
 import { AppService } from './app.service';
+import { KillDragonMessage } from './KillDragonMessage';
 import { UsersService } from './users/users.service';
 @Controller()
 @UseGuards(AuthGuard, ResourceGuard)
-export class AppController {
+export class AppController implements OnModuleInit {
   private readonly logger = new Logger(AppController.name);
 
-  constructor(private readonly appService: AppService ) {}
+  constructor(private readonly appService: AppService , @Inject('AUTH_SERVICE') private readonly clientKafka: ClientKafka ) {}
 
+  onModuleInit() {
+    this.clientKafka.subscribeToResponseOf('hero.kill.dragon');
+  }
+
+  @MessagePattern('my-first-topic') // Our topic name
+  getHelloKafka(@Payload() message) {
+    console.log(message.value);
+    return 'Hello World';
+  }
+
+  @Get()
+  Producer() {
+    return this.clientKafka.send('my-first-topic', 'Hello Kafka'); // args - topic, message
+  }
+
+  @MessagePattern('hero.kill.dragon')
+  killDragon(@Payload() message: KillDragonMessage): any {
+    const dragonId = message.dragonId;
+    const items = [
+      { id: 1, name: 'Mythical Sword' },
+      { id: 2, name: 'Key to Dungeon' },
+    ];
+    return items;
+  }
+  
   @Get()
   @Public()
   getHello(): string {

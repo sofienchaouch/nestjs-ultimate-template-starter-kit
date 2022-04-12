@@ -25,9 +25,13 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
+        clientId: 'hero', // hero-server
         brokers: ['localhost:9092'],
-      }
-    },
+      },
+      consumer: {
+        groupId: 'hero-consumer' // hero-consumer-server
+      },
+    }
   });
   
   await app.startAllMicroservices();
