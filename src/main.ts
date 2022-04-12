@@ -9,10 +9,28 @@ import type {
   NestConfig,
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.connectMicroservice({
+    transport: Transport.REDIS,
+    options: {
+      url: 'redis://localhost:6379',
+    },
+  });
+  
+  app.connectMicroservice({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: ['localhost:9092'],
+      }
+    },
+  });
+  
+  await app.startAllMicroservices();
   // Validation
   app.useGlobalPipes(new ValidationPipe());
 
