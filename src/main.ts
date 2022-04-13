@@ -21,6 +21,7 @@ async function bootstrap() {
     },
   });
   
+  /*
   app.connectMicroservice({
     transport: Transport.KAFKA,
     options: {
@@ -33,6 +34,7 @@ async function bootstrap() {
       },
     }
   });
+  */
   
   await app.startAllMicroservices();
   // Validation

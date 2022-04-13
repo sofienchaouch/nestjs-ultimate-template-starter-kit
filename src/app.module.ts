@@ -23,8 +23,11 @@ import {
 } from 'nest-keycloak-connect';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { KafkaModule } from './kafka/kafka.module';
+import { TestConsumer } from './test.consumer';
 @Module({
   imports: [
+    KafkaModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     PrismaModule.forRoot({
       isGlobal: true,
@@ -59,6 +62,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     }),
 
+    
     ClientsModule.register([
       {
         name: 'GREETING_SERVICE',
@@ -67,6 +71,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           url: 'redis://localhost:6379',
         },
       },
+      /*
       {
         name: 'HERO_SERVICE',
         transport: Transport.KAFKA,
@@ -80,10 +85,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           }
         }
       }
+      */
     ]),
   ],
   controllers: [AppController],
   providers: [
+    TestConsumer,
     AppService,
     // This adds a global level authentication guard,
     // you can also have it scoped

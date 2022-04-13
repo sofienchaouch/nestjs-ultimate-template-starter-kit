@@ -12,11 +12,12 @@ import { KillDragonMessage } from './KillDragonMessage';
 import { UsersService } from './users/users.service';
 @Controller()
 @UseGuards(AuthGuard, ResourceGuard)
-export class AppController implements OnModuleInit {
+export class AppController /* implements OnModuleInit */ {
   private readonly logger = new Logger(AppController.name);
 
-  constructor(private readonly appService: AppService , @Inject('AUTH_SERVICE') private readonly clientKafka: ClientKafka ) {}
+  constructor(private readonly appService: AppService ,/* @Inject('HERO_SERVICE') private readonly clientKafka: ClientKafka */ ) {}
 
+  /*
   onModuleInit() {
     this.clientKafka.subscribeToResponseOf('hero.kill.dragon');
   }
@@ -42,6 +43,7 @@ export class AppController implements OnModuleInit {
     return items;
   }
   
+  */
   @Get()
   @Public()
   getHello(): string {
