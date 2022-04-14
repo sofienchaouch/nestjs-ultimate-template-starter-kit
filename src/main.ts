@@ -9,7 +9,9 @@ import type {
   NestConfig,
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
-import { Transport } from '@nestjs/microservices';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { join } from 'path';
+import { grpcClientOptions } from './grpc-client.options';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +23,7 @@ async function bootstrap() {
     },
   });
   
+
   /*
   app.connectMicroservice({
     transport: Transport.KAFKA,
@@ -35,7 +38,8 @@ async function bootstrap() {
     }
   });
   */
-  
+  app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
+
   await app.startAllMicroservices();
   // Validation
   app.useGlobalPipes(new ValidationPipe());

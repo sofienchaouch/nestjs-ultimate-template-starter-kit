@@ -25,8 +25,10 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
+import { HeroModule } from './hero/hero.module';
 @Module({
   imports: [
+    HeroModule,
     KafkaModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     PrismaModule.forRoot({

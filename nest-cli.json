@@ -6,6 +6,8 @@
     "plugins": [
       "@nestjs/swagger/plugin",
       "@nestjs/graphql/plugin"
-    ]
+    ],
+    "assets": ["**/*.proto"],
+    "watchAssets": true
   }
 }

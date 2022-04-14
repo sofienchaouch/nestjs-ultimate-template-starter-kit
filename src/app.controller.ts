@@ -17,6 +17,7 @@ export class AppController /* implements OnModuleInit */ {
 
   constructor(private readonly appService: AppService ,/* @Inject('HERO_SERVICE') private readonly clientKafka: ClientKafka */ ) {}
 
+
   /*
   onModuleInit() {
     this.clientKafka.subscribeToResponseOf('hero.kill.dragon');
