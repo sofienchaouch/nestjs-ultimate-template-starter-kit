@@ -50,6 +50,8 @@ import { EventsModule } from './events/events.module';
     UsersModule,
     PostsModule,
 
+  //  ClientsModule.register([{ name: 'ITEM_MICROSERVICE', transport: Transport.TCP }]),
+
     KeycloakConnectModule.register({
       authServerUrl: 'http://localhost:8080/auth',
       realm: 'Demo-Realm',

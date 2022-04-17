@@ -4,15 +4,27 @@ import { Cache } from 'cache-manager';
 @Injectable()
 export class AppService {
 
-  constructor(@Inject('GREETING_SERVICE') private client: ClientProxy , @Inject(CACHE_MANAGER) private readonly cacheManager: Cache){}
+  constructor(@Inject('GREETING_SERVICE') private client: ClientProxy , @Inject(CACHE_MANAGER) private readonly cacheManager: Cache
+  /** @Inject('ITEM_MICROSERVICE') private readonly client: ClientProxy */){}
+
+  /*
+  createItem(createItemDto) {
+    return this.client.send({ role: 'item', cmd: 'create' }, createItemDto);
+  }
+  getItemById(id: number) {
+    return this.client.send({ role: 'item', cmd: 'get-by-id' }, id); 
+  }
 
   getHello(): string {
     return 'Hello World!';
   }
+  */
 
   getHelloName(name: string): string {
     return `Hello ${name}!`;
   }
+
+
 
   async getHelloClient(){
     return this.client.send({cmd: 'greeting'}, 'Progressive Coder');
