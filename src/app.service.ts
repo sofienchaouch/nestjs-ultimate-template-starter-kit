@@ -14,11 +14,11 @@ export class AppService {
   getItemById(id: number) {
     return this.client.send({ role: 'item', cmd: 'get-by-id' }, id); 
   }
-
+*/
   getHello(): string {
     return 'Hello World!';
   }
-  */
+  
 
   getHelloName(name: string): string {
     return `Hello ${name}!`;
