@@ -26,8 +26,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
 import { HeroModule } from './hero/hero.module';
+import { EventsModule } from './events/events.module';
+
 @Module({
   imports: [
+    EventsModule,
     HeroModule,
     KafkaModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),

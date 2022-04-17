@@ -23,7 +23,10 @@ async function bootstrap() {
     },
   });
   
-
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: { retryAttempts: 5, retryDelay: 3000 },
+  });
   /*
   app.connectMicroservice({
     transport: Transport.KAFKA,
