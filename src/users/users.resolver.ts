@@ -16,7 +16,7 @@ import { ChangePasswordInput } from './dto/change-password.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
 @Resolver(() => User)
-@UseGuards(GqlAuthGuard)
+//@UseGuards(GqlAuthGuard)
 export class UsersResolver {
   constructor(
     private usersService: UsersService,

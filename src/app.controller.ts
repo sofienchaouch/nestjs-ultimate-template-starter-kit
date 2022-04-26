@@ -1,4 +1,4 @@
-import { CacheKey, CacheTTL, CACHE_MANAGER, Controller, Get, Inject, Logger, OnModuleInit, Param, UseGuards } from '@nestjs/common';
+import { Body, CacheKey, CacheTTL, CACHE_MANAGER, Controller, Delete, Get, Inject, Logger, OnModuleInit, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ClientKafka, EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import {
   AuthGuard,
@@ -7,15 +7,21 @@ import {
   RoleMatchingMode,
   Roles,
 } from 'nest-keycloak-connect';
+import { PrismaService } from 'nestjs-prisma';
 import { AppService } from './app.service';
 import { KillDragonMessage } from './KillDragonMessage';
 import { UsersService } from './users/users.service';
+import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client'
+
 @Controller()
-@UseGuards(AuthGuard, ResourceGuard)
+//@UseGuards(AuthGuard, ResourceGuard)
 export class AppController /* implements OnModuleInit */ {
   private readonly logger = new Logger(AppController.name);
 
-  constructor(private readonly appService: AppService ,/* @Inject('HERO_SERVICE') private readonly clientKafka: ClientKafka */ ) {}
+  constructor(private readonly appService: AppService ,
+    private readonly prismaService: PrismaService ,
+    
+    /* @Inject('HERO_SERVICE') private readonly clientKafka: ClientKafka */ ) {}
 
 
   /*
@@ -45,6 +51,14 @@ export class AppController /* implements OnModuleInit */ {
   }
   
   */
+
+  @Get('Hello-Kafka')
+  getHelloKafka() {
+
+    this.logger.log('Hello-Kafka');
+    return this.appService.getHelloKafka();
+  }
+
   @Get()
   @Public()
   getHello(): string {
@@ -95,4 +109,5 @@ export class AppController /* implements OnModuleInit */ {
   async getHelloRedisCache() {
     return this.appService.getHelloRedisCache();
   }
+
 }

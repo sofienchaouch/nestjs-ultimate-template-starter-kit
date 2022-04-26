@@ -27,6 +27,7 @@ import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
 import { HeroModule } from './hero/hero.module';
 import { EventsModule } from './events/events.module';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -50,16 +51,16 @@ import { EventsModule } from './events/events.module';
     UsersModule,
     PostsModule,
 
-  //  ClientsModule.register([{ name: 'ITEM_MICROSERVICE', transport: Transport.TCP }]),
-
+    // Keycloak Register
     KeycloakConnectModule.register({
       authServerUrl: 'http://localhost:8080/auth',
       realm: 'Demo-Realm',
       clientId: 'nest-app',
-      secret: '7175bbcc-ec5b-48ae-9181-b3b8209ed571',
+      secret: 'cace665c-5d65-40a5-a824-babdbf6e95ed	',
       // Secret key of the client taken from keycloak server
     }),
 
+    // Cache Register
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
@@ -69,7 +70,7 @@ import { EventsModule } from './events/events.module';
       },
     }),
 
-    
+    // Redis Client
     ClientsModule.register([
       {
         name: 'GREETING_SERVICE',
@@ -78,7 +79,13 @@ import { EventsModule } from './events/events.module';
           url: 'redis://localhost:6379',
         },
       },
+
+      /* Microservice  Client TCP Connection      
+    ClientsModule.register([{ name: 'ITEM_MICROSERVICE', transport: Transport.TCP }]),    
+    */
+
       /*
+      Kafka Registration 2nd Choice
       {
         name: 'HERO_SERVICE',
         transport: Transport.KAFKA,
@@ -97,40 +104,54 @@ import { EventsModule } from './events/events.module';
   ],
   controllers: [AppController],
   providers: [
+    PrismaService,
     TestConsumer,
     AppService,
+    AppResolver,
+
+    // KeyCloack
     // This adds a global level authentication guard,
     // you can also have it scoped
     // if you like.
     //
     // Will return a 401 unauthorized when it is unable to
     // verify the JWT token or Bearer header is missing.
+
+    /*
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
+    */
     // This adds a global level resource guard, which is permissive.
     // Only controllers annotated with @Resource and
     // methods with @Scopes
     // are handled by this guard.
+
+    /*
     {
       provide: APP_GUARD,
       useClass: ResourceGuard,
     },
+    */
+
     // New in 1.1.0
     // This adds a global level role guard, which is permissive.
     // Used by `@Roles` decorator with the
     // optional `@AllowAnyRole` decorator for allowing any
     // specified role passed.
+
+    /*
     {
       provide: APP_GUARD,
       useClass: RoleGuard,
     },
-    AppResolver,
+    
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
+    */
   ],
 })
 export class AppModule {}

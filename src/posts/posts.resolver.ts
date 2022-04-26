@@ -21,12 +21,13 @@ import { Post } from './models/post.model';
 import { PostConnection } from './models/post-connection.model';
 import { PostOrder } from './dto/post-order.input';
 import { CreatePostInput } from './dto/createPost.input';
+import { PostsService } from './posts.service';
 
 const pubSub = new PubSub();
 
 @Resolver(() => Post)
 export class PostsResolver {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService , private readonly postService: PostsService) {}
 
   @Subscription(() => Post)
   postCreated() {
@@ -101,13 +102,4 @@ export class PostsResolver {
     // });
   }
 
-  @Query(() => Post)
-  async post(@Args() id: PostIdArgs) {
-    return this.prisma.post.findUnique({ where: { id: id.postId } });
-  }
-
-  @ResolveField('author')
-  async author(@Parent() post: Post) {
-    return this.prisma.post.findUnique({ where: { id: post.id } }).author();
-  }
 }

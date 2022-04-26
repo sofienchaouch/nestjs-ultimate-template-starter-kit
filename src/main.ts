@@ -4,18 +4,14 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
-import type {
-  CorsConfig,
-  NestConfig,
-  SwaggerConfig,
-} from 'src/common/configs/config.interface';
+import type {  CorsConfig, NestConfig, SwaggerConfig} from 'src/common/configs/config.interface';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 import { grpcClientOptions } from './grpc-client.options';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Redis Connection
   app.connectMicroservice({
     transport: Transport.REDIS,
     options: {
@@ -23,27 +19,16 @@ async function bootstrap() {
     },
   });
   
+  // TCP Connection
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: { retryAttempts: 5, retryDelay: 3000 },
   });
-  /*
-  app.connectMicroservice({
-    transport: Transport.KAFKA,
-    options: {
-      client: {
-        clientId: 'hero', // hero-server
-        brokers: ['localhost:9092'],
-      },
-      consumer: {
-        groupId: 'hero-consumer' // hero-consumer-server
-      },
-    }
-  });
-  */
+
   app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
 
   await app.startAllMicroservices();
+
   // Validation
   app.useGlobalPipes(new ValidationPipe());
 

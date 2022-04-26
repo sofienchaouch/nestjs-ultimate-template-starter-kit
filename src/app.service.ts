@@ -1,11 +1,14 @@
-import { CACHE_MANAGER, Inject, Injectable  } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Cache } from 'cache-manager';
+import { ProducerService } from './kafka/producer.service';
 @Injectable()
 export class AppService {
-
-  constructor(@Inject('GREETING_SERVICE') private client: ClientProxy , @Inject(CACHE_MANAGER) private readonly cacheManager: Cache
-  /** @Inject('ITEM_MICROSERVICE') private readonly client: ClientProxy */){}
+  constructor(
+    @Inject('GREETING_SERVICE') private client: ClientProxy,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private readonly producerService: ProducerService
+  ) /** @Inject('ITEM_MICROSERVICE') private readonly client: ClientProxy */ {}
 
   /*
   createItem(createItemDto) {
@@ -15,28 +18,43 @@ export class AppService {
     return this.client.send({ role: 'item', cmd: 'get-by-id' }, id); 
   }
 */
+
+async getHelloKafka() {
+  await this.producerService.produce({
+    topic: 'test',
+    messages: [
+      {
+        value: 'Hello World',
+      },
+    ],
+  });
+  return 'Hello World!';
+}
   getHello(): string {
     return 'Hello World!';
   }
-  
 
   getHelloName(name: string): string {
     return `Hello ${name}!`;
   }
 
-
-
-  async getHelloClient(){
-    return this.client.send({cmd: 'greeting'}, 'Progressive Coder');
+  async getHelloClient() {
+    return this.client.send({ cmd: 'greeting' }, 'Progressive Coder');
   }
 
   async getHelloAsync() {
-    const message = await this.client.send({cmd: 'greeting-async'}, 'Progressive Coder');
+    const message = await this.client.send(
+      { cmd: 'greeting-async' },
+      'Progressive Coder'
+    );
     return message;
   }
 
   async publishEvent() {
-    this.client.emit('book-created', {'bookName': 'The Way Of Kings', 'author': 'Brandon Sanderson'});
+    this.client.emit('book-created', {
+      bookName: 'The Way Of Kings',
+      author: 'Brandon Sanderson',
+    });
   }
 
   async getHelloRedisCache() {
