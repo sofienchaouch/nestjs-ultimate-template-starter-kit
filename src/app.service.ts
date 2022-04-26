@@ -2,6 +2,8 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ProducerService } from './kafka/producer.service';
 import { RedisCacheService } from './redis/redis.service';
+
+
 @Injectable()
 export class AppService {
   constructor(
