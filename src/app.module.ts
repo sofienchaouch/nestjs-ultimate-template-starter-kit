@@ -55,10 +55,10 @@ import { RedisCacheModule } from './redis/redis.module';
 
     // Keycloak Register
     KeycloakConnectModule.register({
-      authServerUrl: 'http://localhost:8080/auth',
-      realm: 'Demo-Realm',
-      clientId: 'nest-app',
-      secret: 'cace665c-5d65-40a5-a824-babdbf6e95ed	',
+      authServerUrl: process.env.AUTHSERVERURL,
+      realm: process.env.REALM,
+      clientId: process.env.CLEINTID,
+      secret: process.env.SECRET,
       // Secret key of the client taken from keycloak server
     }),
 

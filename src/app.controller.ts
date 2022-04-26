@@ -14,7 +14,7 @@ import { UsersService } from './users/users.service';
 import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client'
 
 @Controller()
-//@UseGuards(AuthGuard, ResourceGuard)
+@UseGuards(AuthGuard, ResourceGuard)
 export class AppController /* implements OnModuleInit */ {
   private readonly logger = new Logger(AppController.name);
 
