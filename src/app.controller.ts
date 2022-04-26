@@ -103,10 +103,11 @@ export class AppController /* implements OnModuleInit */ {
     this.appService.publishEvent();
   }
 
-  @Get()
+  @Get("redis")
   @CacheKey('some_route')
   @CacheTTL(30)
   async getHelloRedisCache() {
+    this.logger.log('getHelloRedisCache');
     return this.appService.getHelloRedisCache();
   }
 

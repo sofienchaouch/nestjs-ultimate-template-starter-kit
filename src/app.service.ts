@@ -1,14 +1,15 @@
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Cache } from 'cache-manager';
 import { ProducerService } from './kafka/producer.service';
+import { RedisCacheService } from './redis/redis.service';
 @Injectable()
 export class AppService {
   constructor(
     @Inject('GREETING_SERVICE') private client: ClientProxy,
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private readonly redisCache: RedisCacheService,
     private readonly producerService: ProducerService
   ) /** @Inject('ITEM_MICROSERVICE') private readonly client: ClientProxy */ {}
+  private readonly logger = new Logger(AppService.name);
 
   /*
   createItem(createItemDto) {
@@ -58,10 +59,11 @@ async getHelloKafka() {
   }
 
   async getHelloRedisCache() {
-    await this.cacheManager.set('cached_item', { key: 32 }, { ttl: 10 });
-    await this.cacheManager.del('cached_item');
-    await this.cacheManager.reset();
-    const cachedItem = await this.cacheManager.get('cached_item');
+    this.logger.log('App Service getHelloRedisCache');
+    await this.redisCache.set('cached_item', { key: 32 });
+//    await this.cacheManager.del('cached_item');
+//    await this.cacheManager.reset();
+    const cachedItem = await this.redisCache.get('cached_item');
     console.log(cachedItem);
     return 'Hello World!';
   }

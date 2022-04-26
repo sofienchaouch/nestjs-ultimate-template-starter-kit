@@ -28,12 +28,14 @@ import { TestConsumer } from './test.consumer';
 import { HeroModule } from './hero/hero.module';
 import { EventsModule } from './events/events.module';
 import { PrismaService } from './prisma.service';
+import { RedisCacheModule } from './redis/redis.module';
 
 @Module({
   imports: [
     EventsModule,
     HeroModule,
     KafkaModule,
+    RedisCacheModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     PrismaModule.forRoot({
       isGlobal: true,
@@ -60,15 +62,6 @@ import { PrismaService } from './prisma.service';
       // Secret key of the client taken from keycloak server
     }),
 
-    // Cache Register
-    CacheModule.register({
-      isGlobal: true,
-      store: redisStore,
-      socket: {
-        host: 'localhost',
-        port: 6379,
-      },
-    }),
 
     // Redis Client
     ClientsModule.register([
@@ -101,6 +94,8 @@ import { PrismaService } from './prisma.service';
       }
       */
     ]),
+
+    
   ],
   controllers: [AppController],
   providers: [

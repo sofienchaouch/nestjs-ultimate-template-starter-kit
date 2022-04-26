@@ -11,7 +11,7 @@ import { grpcClientOptions } from './grpc-client.options';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Redis Connection
+  // Redis Connection Microservices
   app.connectMicroservice({
     transport: Transport.REDIS,
     options: {
