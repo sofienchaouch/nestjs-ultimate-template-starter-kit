@@ -5,7 +5,9 @@ import {
   Logger,
   Module,
   OnModuleInit,
+  CacheInterceptor,
 } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { Cache } from 'cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { RedisCacheService } from './redis.service';
@@ -21,9 +23,13 @@ import { RedisCacheService } from './redis.service';
                   ttl: 60 * 3600 * 1000,
               };
           },
+          isGlobal: true,
       }),
   ],
-  providers:[RedisCacheService],
+  providers:[RedisCacheService,    {
+    provide: APP_INTERCEPTOR,
+    useClass: CacheInterceptor,
+  },],
   exports: [
       RedisCacheModule,
       RedisCacheService,

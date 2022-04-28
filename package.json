@@ -68,6 +68,7 @@
     "@nestjs/swagger": "5.1.5",
     "@nestjs/websockets": "^8.4.4",
     "@prisma/client": "3.8.1",
+    "@types/socket.io": "^3.0.2",
     "apollo-server-express": "^3.6.3",
     "bcrypt": "5.0.1",
     "cache-manager": "^3.6.1",

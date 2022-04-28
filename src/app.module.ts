@@ -26,7 +26,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaModule } from './kafka/kafka.module';
 import { TestConsumer } from './test.consumer';
 import { HeroModule } from './hero/hero.module';
-import { EventsModule } from './events/events.module';
+import { EventsModule } from './websocketio/websocketio.module';
 import { PrismaService } from './prisma.service';
 import { RedisCacheModule } from './redis/redis.module';
 

@@ -12,8 +12,8 @@ import { UserEntity } from 'src/common/decorators/user.decorator';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { UsersService } from './users.service';
 import { User } from './models/user.model';
-import { ChangePasswordInput } from './dto/change-password.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { ChangePasswordInput } from './dto/input/change-password.input';
+import { UpdateUserInput } from './dto/input/update-user.input';
 
 @Resolver(() => User)
 //@UseGuards(GqlAuthGuard)

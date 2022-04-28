@@ -15,12 +15,12 @@ import { PaginationArgs } from 'src/common/pagination/pagination.args';
 import { UserEntity } from 'src/common/decorators/user.decorator';
 import { User } from 'src/users/models/user.model';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
-import { PostIdArgs } from './args/post-id.args';
-import { UserIdArgs } from './args/user-id.args';
+import { PostIdArgs } from './dto/args/post-id.args';
+import { UserIdArgs } from './dto/args/user-id.args';
 import { Post } from './models/post.model';
 import { PostConnection } from './models/post-connection.model';
-import { PostOrder } from './dto/post-order.input';
-import { CreatePostInput } from './dto/createPost.input';
+import { PostOrder } from './dto/input/post-order.input';
+import { CreatePostInput } from './dto/input/createPost.input';
 import { PostsService } from './posts.service';
 
 const pubSub = new PubSub();

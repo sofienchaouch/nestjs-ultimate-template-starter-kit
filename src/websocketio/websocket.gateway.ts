@@ -14,7 +14,7 @@ import { Server } from 'socket.io';
     origin: '*',
   },
 })
-export class EventsGateway {
+export class WebSocketioGateway {
   @WebSocketServer()
   server: Server;
 
@@ -26,5 +26,10 @@ export class EventsGateway {
   @SubscribeMessage('identity')
   async identity(@MessageBody() data: number): Promise<number> {
     return data;
+  }
+
+  @SubscribeMessage('message')
+  handleMessage(@MessageBody() message: string): void {
+    this.server.emit('message', message);
   }
 }

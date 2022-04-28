@@ -1,4 +1,4 @@
-import { Body, CacheKey, CacheTTL, CACHE_MANAGER, Controller, Delete, Get, Inject, Logger, OnModuleInit, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, CACHE_MANAGER, Controller, Delete, Get, Inject, Logger, OnModuleInit, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ClientKafka, EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import {
   AuthGuard,
@@ -15,6 +15,7 @@ import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client'
 
 @Controller()
 @UseGuards(AuthGuard, ResourceGuard)
+@UseInterceptors(CacheInterceptor)
 export class AppController /* implements OnModuleInit */ {
   private readonly logger = new Logger(AppController.name);
 
