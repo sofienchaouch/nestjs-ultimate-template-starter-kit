@@ -476,6 +476,7 @@ After you configured the Interceptor and retrieved the `TOKEN` from storage your
 #### WebSocket
 src/websocketio
 
+```
 // Web Socket On Nest Js Main Port 3000
 @WebSocketGateway({
   cors: {
@@ -501,3 +502,49 @@ export class WebSocketioGateway {
     this.server.emit('message', message);
   }
 }
+```
+
+#### Caching with Redis
+Check  [src/redis] Folder
+
+#### Kafka 
+Connection to kafka Cluster
+Check KAFKA module [src/kafka] Folder
+
+kafka Consumer with [consumer.ts]
+kafka producer with [producer.ts] 
+[test.consumer.ts] for testing kafka consumer 
+
+#### Keycloak
+Register to Keycloak server in [app.module.ts]
+```
+    // Keycloak Register
+    KeycloakConnectModule.register({
+      authServerUrl: process.env.AUTHSERVERURL,
+      realm: process.env.REALM,
+      clientId: process.env.CLEINTID,
+      secret: process.env.SECRET,
+      // Secret key of the client taken from keycloak server
+    }),
+```
+
+Securing Nest App with nest-keyclaok-connect Dependency
+```
+import {
+  KeycloakConnectModule,
+  ResourceGuard,
+  RoleGuard,
+  AuthGuard,
+} from 'nest-keycloak-connect';
+```
+
+#### Logging 
+logging with
+```
+  private readonly logger = new Logger(AppController.name);
+```
+
+#### CI/CD pipeline with github Actions 
+
+Github Actions yaml files [.github/workflows]
+
