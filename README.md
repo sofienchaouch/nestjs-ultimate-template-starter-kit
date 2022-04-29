@@ -472,3 +472,32 @@ providers: [
 After you configured the Interceptor and retrieved the `TOKEN` from storage your request will succeed on resolvers with `@UseGuards(GqlAuthGuard)`.
 
 **[⬆ back to top](#overview)**
+
+#### WebSocket
+src/websocketio
+
+// Web Socket On Nest Js Main Port 3000
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class WebSocketioGateway {
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('events')
+  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
+    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  }
+
+  @SubscribeMessage('identity')
+  async identity(@MessageBody() data: number): Promise<number> {
+    return data;
+  }
+
+  @SubscribeMessage('message')
+  handleMessage(@MessageBody() message: string): void {
+    this.server.emit('message', message);
+  }
+}
