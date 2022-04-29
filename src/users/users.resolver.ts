@@ -37,7 +37,7 @@ export class UsersResolver {
     return this.usersService.updateUser(user.id, newUserData);
   }
 
-  @UseGuards(GqlAuthGuard)
+//  @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   async changePassword(
     @UserEntity() user: User,

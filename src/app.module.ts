@@ -11,7 +11,7 @@ import { PostsModule } from 'src/posts/posts.module';
 import config from 'src/common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GqlConfigService } from './gql-config.service';
+import { GqlConfigService } from './common/configs/gql-config.service';
 import { UsersService } from './users/users.service';
 import * as redisStore from 'cache-manager-redis-store';
 
@@ -24,7 +24,7 @@ import {
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaModule } from './kafka/kafka.module';
-import { TestConsumer } from './test.consumer';
+import { TestConsumer } from './kafka/test.consumer';
 import { HeroModule } from './hero/hero.module';
 import { EventsModule } from './websocketio/websocketio.module';
 import { PrismaService } from './prisma.service';

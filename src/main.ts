@@ -6,7 +6,7 @@ import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import { AppModule } from './app.module';
 import type {  CorsConfig, NestConfig, SwaggerConfig} from 'src/common/configs/config.interface';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { grpcClientOptions } from './grpc-client.options';
+import { grpcClientOptions } from './common/configs/grpc-client.options';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

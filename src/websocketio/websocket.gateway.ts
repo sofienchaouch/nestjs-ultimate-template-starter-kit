@@ -9,6 +9,7 @@ import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Server } from 'socket.io';
 
+// Web Socket On Nest Js Main Port 3000
 @WebSocketGateway({
   cors: {
     origin: '*',

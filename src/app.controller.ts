@@ -9,7 +9,7 @@ import {
 } from 'nest-keycloak-connect';
 import { PrismaService } from 'nestjs-prisma';
 import { AppService } from './app.service';
-import { KillDragonMessage } from './KillDragonMessage';
+import { KillDragonMessage } from './hero/KillDragonMessage';
 import { UsersService } from './users/users.service';
 import { User as UserModel, Post as PostModel, Prisma } from '@prisma/client'
 
