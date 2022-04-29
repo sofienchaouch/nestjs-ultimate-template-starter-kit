@@ -16,8 +16,6 @@ on:
         description: 'Log level'     
         required: true
         default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
