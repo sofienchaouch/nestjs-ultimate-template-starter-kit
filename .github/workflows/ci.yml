@@ -9,7 +9,15 @@ on:
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
-
+    
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
