@@ -26,10 +26,12 @@ import { RedisCacheService } from './redis.service';
           isGlobal: true,
       }),
   ],
-  providers:[RedisCacheService,    {
+  providers:[RedisCacheService,  
+    /*  {
     provide: APP_INTERCEPTOR,
     useClass: CacheInterceptor,
-  },],
+  }, */
+],
   exports: [
       RedisCacheModule,
       RedisCacheService,

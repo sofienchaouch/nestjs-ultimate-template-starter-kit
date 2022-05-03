@@ -80,6 +80,7 @@
     "graphql-subscriptions": "1.2.1",
     "kafkajs": "^1.16.0",
     "nest-keycloak-connect": "^1.8.2",
+    "nest-keycloak-connect-graphql": "^1.2.1",
     "nestjs-keycloak-admin": "^1.7.1",
     "nestjs-prisma": "^0.15.0",
     "passport": "0.5.2",
