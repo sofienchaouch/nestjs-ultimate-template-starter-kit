@@ -36,7 +36,7 @@ import { RedisCacheModule } from './redis/redis.module';
     HeroModule,
     KafkaModule,
     RedisCacheModule,
-    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [config] , envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,  }),
     PrismaModule.forRoot({
       isGlobal: true,
       prismaServiceOptions: {
