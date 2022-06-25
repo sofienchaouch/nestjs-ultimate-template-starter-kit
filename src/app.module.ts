@@ -29,6 +29,7 @@ import { HeroModule } from './hero/hero.module';
 import { EventsModule } from './websocketio/websocketio.module';
 import { PrismaService } from './prisma.service';
 import { RedisCacheModule } from './redis/redis.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -94,6 +95,9 @@ import { RedisCacheModule } from './redis/redis.module';
       }
       */
     ]),
+
+
+    MailModule,
 
     
   ],
